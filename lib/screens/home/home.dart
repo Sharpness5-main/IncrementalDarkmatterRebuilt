@@ -84,9 +84,11 @@ class Home extends ConsumerWidget {
                       style: TextStyle(color: Colors.black54, fontSize: 13),
                     ),
                     TextSpan(
-                      text: ((((ref.watch(dm1persecProvider) +
-                                              ref.watch(dm2persecProvider) +
-                                              ref.watch(dm3persecProvider)) /
+                      text: ((((((ref.watch(dm1persecProvider) +
+                                                  ref.watch(dm2persecProvider) +
+                                                  ref.watch(
+                                                      dm3persecProvider))) *
+                                              ref.watch(spmultiplierProvider)) /
                                           ref.watch(dmsoftcapdiviserProvider)) *
                                       100)
                                   .round() /
@@ -149,7 +151,8 @@ class Home extends ConsumerWidget {
                       ],
                     ));
                   }),
-                  Text("Multi: ${ref.watch(cpmultiplierProvider)}x"),
+                  Text(
+                      "Multi: ${(ref.watch(cpmultiplierProvider) * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
                   Text("Cost: ${ref.watch(cpupgcostProvider).round()}"),
                   ElevatedButton(
                     onPressed: homenotifier.upgradeClickPower,
@@ -165,7 +168,7 @@ class Home extends ConsumerWidget {
                   Consumer(builder: (context, ref, child) {
                     return RichText(
                         text: TextSpan(
-                      text: 'Upgraded CP\n',
+                      text: 'CP Upgrader\n',
                       style: const TextStyle(color: Colors.black, fontSize: 13),
                       children: <TextSpan>[
                         TextSpan(
@@ -177,10 +180,40 @@ class Home extends ConsumerWidget {
                       ],
                     ));
                   }),
-                  Text("Multi: ${ref.watch(upmultiplierProvider)}x"),
+                  Text(
+                      "Multi: ${(ref.watch(upmultiplierProvider) * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
                   Text("Cost: ${ref.watch(upupgcostProvider).round()}"),
                   ElevatedButton(
                     onPressed: homenotifier.upgradeUpgradePower,
+                    style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(90, 35),
+                        alignment: Alignment.center),
+                    child: const Text("Upgrade"),
+                  ),
+                ]),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Consumer(builder: (context, ref, child) {
+                    return RichText(
+                        text: TextSpan(
+                      text: 'CP Enhancer\n',
+                      style: const TextStyle(color: Colors.black, fontSize: 14),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text:
+                              "${ref.watch(enhancepowerProvider).round()}+${((ref.watch(freeepupgProvider) * 100).round() / 100)}",
+                          style: const TextStyle(
+                              color: Colors.purple, fontSize: 18),
+                        ),
+                      ],
+                    ));
+                  }),
+                  Text(
+                      "Multi: ${(ref.watch(epmultiplierProvider) * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
+                  Text("Cost: ${ref.watch(epupgcostProvider).round()}"),
+                  ElevatedButton(
+                    onPressed: homenotifier.upgradeEnhancePower,
                     style: ElevatedButton.styleFrom(
                         fixedSize: const Size(90, 35),
                         alignment: Alignment.center),
@@ -200,8 +233,9 @@ class Home extends ConsumerWidget {
                 children: <Widget>[
                   const Text("1st Dim"),
                   Text(
-                      "${(ref.watch(dmdim1Provider)[0] * ref.watch(dmdim1Provider)[1] * 100 / ref.watch(dmsoftcapdiviserProvider)).round() / 100}x"),
-                  Text("${ref.watch(dmdim1Provider)[2].round()}"),
+                      "${(ref.watch(dmdim1Provider)[0] * ref.watch(dmdim1Provider)[1] * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
+                  Text(
+                      "${ref.watch(dmdim1Provider)[2].round()}[${ref.watch(dmdim1Provider)[3]}]"),
                   Text("Cost: ${ref.watch(dmdim1Provider)[4].round()}"),
                   ElevatedButton(
                     onPressed: homenotifier.buyDmDim1,
@@ -219,8 +253,9 @@ class Home extends ConsumerWidget {
                 children: <Widget>[
                   const Text("2nd Dim"),
                   Text(
-                      "${(ref.watch(dmdim2Provider)[0] * ref.watch(dmdim2Provider)[1] * 100 / ref.watch(dmsoftcapdiviserProvider)).round() / 100}x"),
-                  Text("${ref.watch(dmdim2Provider)[2].round()}"),
+                      "${(ref.watch(dmdim2Provider)[0] * ref.watch(dmdim2Provider)[1] * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
+                  Text(
+                      "${ref.watch(dmdim2Provider)[2].round()}[${ref.watch(dmdim2Provider)[3]}]"),
                   Text("Cost: ${ref.watch(dmdim2Provider)[4].round()}"),
                   ElevatedButton(
                     onPressed: homenotifier.buyDmDim2,
@@ -238,8 +273,9 @@ class Home extends ConsumerWidget {
                 children: <Widget>[
                   const Text("3rd Dim"),
                   Text(
-                      "${(ref.watch(dmdim3Provider)[0] * ref.watch(dmdim3Provider)[1] * 100 / ref.watch(dmsoftcapdiviserProvider)).round() / 100}x"),
-                  Text("${ref.watch(dmdim3Provider)[2].round()}"),
+                      "${(ref.watch(dmdim3Provider)[0] * ref.watch(dmdim3Provider)[1] * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
+                  Text(
+                      "${ref.watch(dmdim3Provider)[2].round()}[${ref.watch(dmdim3Provider)[3]}]"),
                   Text("Cost: ${ref.watch(dmdim3Provider)[4].round()}"),
                   ElevatedButton(
                     onPressed: homenotifier.buyDmDim3,
