@@ -71,9 +71,9 @@ class Home extends ConsumerWidget {
                   style: const TextStyle(color: Colors.black54, fontSize: 13),
                   children: <TextSpan>[
                     TextSpan(
-                      text: ((ref.watch(dmperclickProvider) * 1000).round() /
-                              1000)
-                          .toString(),
+                      text:
+                          ((ref.watch(dmperclickProvider) * 100).round() / 100)
+                              .toString(),
                       style: Theme.of(context)
                           .textTheme
                           .headlineMedium
@@ -84,14 +84,13 @@ class Home extends ConsumerWidget {
                       style: TextStyle(color: Colors.black54, fontSize: 13),
                     ),
                     TextSpan(
-                      text: ((((ref.watch(dmdim1Provider)[2] *
-                                              ref.watch(dmdim1Provider)[1] *
-                                              ref.watch(dmdim1Provider)[0]) /
-                                          ref.watch(dmsoftcapdiviserProvider) /
-                                          ref.watch(dmdim1softcapProvider)) *
-                                      1000)
+                      text: ((((ref.watch(dm1persecProvider) +
+                                              ref.watch(dm2persecProvider) +
+                                              ref.watch(dm3persecProvider)) /
+                                          ref.watch(dmsoftcapdiviserProvider)) *
+                                      100)
                                   .round() /
-                              1000)
+                              100)
                           .toString(),
                       style: Theme.of(context)
                           .textTheme
@@ -116,9 +115,9 @@ class Home extends ConsumerWidget {
                     style: const TextStyle(color: Colors.red, fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                        text: ((ref.watch(dmsoftcapdiviserProvider) * 10000)
+                        text: ((ref.watch(dmsoftcapdiviserProvider) * 100)
                                     .round() /
-                                10000)
+                                100)
                             .toString(),
                         style: Theme.of(context)
                             .textTheme
@@ -132,22 +131,6 @@ class Home extends ConsumerWidget {
               }),
             if (ref.watch(dmsoftcapdiviserProvider) <= 1.0)
               const SizedBox(height: 20),
-            if (ref.watch(dmdim1softcapProvider) +
-                    ref.watch(dmdim2softcapProvider) +
-                    ref.watch(dmdim3softcapProvider) >
-                3.0)
-              Text(
-                "Because of dim softcap,your dim is weakened. (Border : 5x)",
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium
-                    ?.copyWith(color: Colors.red, fontSize: 14),
-              ),
-            if (ref.watch(dmdim1softcapProvider) +
-                    ref.watch(dmdim2softcapProvider) +
-                    ref.watch(dmdim3softcapProvider) <=
-                3.0)
-              const SizedBox(height: 17),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -215,12 +198,11 @@ class Home extends ConsumerWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
+                  const Text("1st Dim"),
                   Text(
-                      "1st Dim\n /${(ref.watch(dmdim1softcapProvider) * ref.watch(dmsoftcapdiviserProvider) * 100).round() / 100}"),
-                  Text(
-                      "${(ref.watch(dmdim1Provider)[0] * ref.watch(dmdim1Provider)[1] * 100 / ref.watch(dmdim1softcapProvider) / ref.watch(dmsoftcapdiviserProvider)).round() / 100}x"),
-                  Text("  ${ref.watch(dmdim1Provider)[2].round()}"),
-                  Text("Cost ${ref.watch(dmdim1Provider)[4].round()}"),
+                      "${(ref.watch(dmdim1Provider)[0] * ref.watch(dmdim1Provider)[1] * 100 / ref.watch(dmsoftcapdiviserProvider)).round() / 100}x"),
+                  Text("${ref.watch(dmdim1Provider)[2].round()}"),
+                  Text("Cost: ${ref.watch(dmdim1Provider)[4].round()}"),
                   ElevatedButton(
                     onPressed: homenotifier.buyDmDim1,
                     style: ElevatedButton.styleFrom(
@@ -235,12 +217,11 @@ class Home extends ConsumerWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
+                  const Text("2nd Dim"),
                   Text(
-                      "2nd Dim\n /${(ref.watch(dmdim2softcapProvider) * ref.watch(dmsoftcapdiviserProvider) * 100).round() / 100}"),
-                  Text(
-                      "${(ref.watch(dmdim2Provider)[0] * ref.watch(dmdim2Provider)[1] * 100 / ref.watch(dmdim2softcapProvider) / ref.watch(dmsoftcapdiviserProvider)).round() / 100}x"),
-                  Text("  ${ref.watch(dmdim2Provider)[2].round()}"),
-                  Text("Cost ${ref.watch(dmdim2Provider)[4].round()}"),
+                      "${(ref.watch(dmdim2Provider)[0] * ref.watch(dmdim2Provider)[1] * 100 / ref.watch(dmsoftcapdiviserProvider)).round() / 100}x"),
+                  Text("${ref.watch(dmdim2Provider)[2].round()}"),
+                  Text("Cost: ${ref.watch(dmdim2Provider)[4].round()}"),
                   ElevatedButton(
                     onPressed: homenotifier.buyDmDim2,
                     style: ElevatedButton.styleFrom(
@@ -255,12 +236,11 @@ class Home extends ConsumerWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
+                  const Text("3rd Dim"),
                   Text(
-                      "3rd Dim\n /${(ref.watch(dmdim3softcapProvider) * ref.watch(dmsoftcapdiviserProvider) * 100).round() / 100}"),
-                  Text(
-                      "${(ref.watch(dmdim3Provider)[0] * ref.watch(dmdim3Provider)[1] * 100 / ref.watch(dmdim3softcapProvider) / ref.watch(dmsoftcapdiviserProvider)).round() / 100}x"),
-                  Text("  ${ref.watch(dmdim3Provider)[2].round()}"),
-                  Text("Cost ${ref.watch(dmdim3Provider)[4].round()}"),
+                      "${(ref.watch(dmdim3Provider)[0] * ref.watch(dmdim3Provider)[1] * 100 / ref.watch(dmsoftcapdiviserProvider)).round() / 100}x"),
+                  Text("${ref.watch(dmdim3Provider)[2].round()}"),
+                  Text("Cost: ${ref.watch(dmdim3Provider)[4].round()}"),
                   ElevatedButton(
                     onPressed: homenotifier.buyDmDim3,
                     style: ElevatedButton.styleFrom(
@@ -359,7 +339,7 @@ class Home extends ConsumerWidget {
                   }),
                   Text("DM Multi: ${ref.watch(spmultiplierProvider)}x"),
                   Text(
-                      "Upg Multi: ${((ref.watch(spmultiupgProvider)) * 1000).round() / 1000}x"),
+                      "Upg Multi: ${((ref.watch(spmultiupgProvider)) * 100).round() / 100}x"),
                 ]),
           ],
         ),
