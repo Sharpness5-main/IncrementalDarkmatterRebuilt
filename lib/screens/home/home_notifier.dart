@@ -61,15 +61,13 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
             spmultiplier.state) /
         dmsoftcapdiviser.state));
     darkmatter.update((state) => (darkmatter.state +
-            ((dm1persec.state + dm2persec.state + dm3persec.state) *
-                    spmultiplier.state) /
-                dmsoftcapdiviser.state)
-        .round()
-        .toDouble());
+        ((dm1persec.state + dm2persec.state + dm3persec.state) *
+                spmultiplier.state) /
+            dmsoftcapdiviser.state));
     if (darkmatter.state >= 50000) {
       sacrificepointincrease.update((state) =>
-          (pow((darkmatter.state - 50000), 0.35) *
-                  (1 + sacrificecount.state * 0.1))
+          (pow((darkmatter.state - 50000), 0.4) *
+                  (1 + sacrificecount.state * 0.05))
               .round()
               .toDouble());
     } else {
@@ -121,16 +119,16 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
     }
     if (clickpower.state <= 15) {
       cpupgcost.update(
-          (state) => (30 * pow(1.2, clickpower.state)).round().toDouble());
+          (state) => (30 * pow(1.15, clickpower.state)).round().toDouble());
     } else if (clickpower.state > 15 && clickpower.state <= 40) {
       cpupgcost.update((state) =>
-          (30 * 15.41 * pow(1.25, clickpower.state - 15)).round().toDouble());
+          (30 * 8.137 * pow(1.25, clickpower.state - 15)).round().toDouble());
     } else if (clickpower.state > 40 && clickpower.state <= 75) {
       cpupgcost.update((state) =>
-          (30 * 4079 * pow(1.35, clickpower.state - 40)).round().toDouble());
+          (30 * 2154 * pow(1.4, clickpower.state - 40)).round().toDouble());
     } else {
       cpupgcost.update((state) =>
-          (30 * 148674197 * pow(1.5, clickpower.state - 75))
+          (30 * 280367034 * pow(1.6, clickpower.state - 75))
               .round()
               .toDouble());
     }
@@ -152,7 +150,7 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
       darkmatter.update((state) => darkmatter.state - upupgcost.state);
       upgradepower.update((state) => upgradepower.state + 1);
       freecpupg.update((state) =>
-          (((enhancepower.state * (0.25 * spmultiupg.state) +
+          (((enhancepower.state * (0.20 * spmultiupg.state) +
                       (upgradepower.state + freeupupg.state) *
                           (0.15 * spmultiupg.state))) *
                   100)
@@ -173,17 +171,15 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
           (state) => (400 * pow(1.25, upgradepower.state)).round().toDouble());
     } else if (upgradepower.state > 10 && upgradepower.state <= 25) {
       upupgcost.update((state) =>
-          (400 * 9.313 * pow(1.35, upgradepower.state - 10))
-              .round()
-              .toDouble());
+          (400 * 9.313 * pow(1.4, upgradepower.state - 10)).round().toDouble());
     } else if (upgradepower.state > 25 && upgradepower.state <= 50) {
       upupgcost.update((state) =>
-          (400 * 839.65 * pow(1.5, upgradepower.state - 25))
+          (400 * 1448.8 * pow(1.6, upgradepower.state - 25))
               .round()
               .toDouble());
     } else {
       upupgcost.update((state) =>
-          (400 * 21202143 * pow(1.7, upgradepower.state - 50))
+          (400 * 183657219 * pow(1.8, upgradepower.state - 50))
               .round()
               .toDouble());
     }
@@ -210,7 +206,7 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
           (((enhancepower.state * (0.15 * spmultiupg.state))) * 100).round() /
           100);
       freecpupg.update((state) =>
-          (((enhancepower.state * (0.25 * spmultiupg.state) +
+          (((enhancepower.state * (0.2 * spmultiupg.state) +
                       (upgradepower.state + freeupupg.state) *
                           (0.15 * spmultiupg.state))) *
                   100)
@@ -231,19 +227,15 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
           (state) => (5000 * pow(1.3, enhancepower.state)).round().toDouble());
     } else if (enhancepower.state > 4 && enhancepower.state <= 12) {
       epupgcost.update((state) =>
-          (5000 * 2.856 * pow(1.45, enhancepower.state - 4))
-              .round()
-              .toDouble());
+          (5000 * 2.856 * pow(1.5, enhancepower.state - 4)).round().toDouble());
     } else if (enhancepower.state > 12 && enhancepower.state <= 25) {
       epupgcost.update((state) =>
-          (5000 * 55.809 * pow(1.6, enhancepower.state - 12))
+          (5000 * 73.196 * pow(1.7, enhancepower.state - 12))
               .round()
               .toDouble());
     } else {
       epupgcost.update((state) =>
-          (5000 * 25134 * pow(1.8, enhancepower.state - 25))
-              .round()
-              .toDouble());
+          (5000 * 72497 * pow(2, enhancepower.state - 25)).round().toDouble());
     }
   }
 
@@ -255,7 +247,7 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
       darkmatter.update((state) => darkmatter.state - dmdim1.state[4]);
       dmdim1.update((state) => [
             dmdim1.state[0],
-            dmdim1.state[1] * 1.275,
+            dmdim1.state[1] * 1.25,
             dmdim1.state[2] + 1,
             dmdim1.state[3] + 1,
             dmdim1.state[4] * 1.4,
@@ -275,7 +267,7 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
       darkmatter.update((state) => darkmatter.state - dmdim2.state[4]);
       dmdim2.update((state) => [
             dmdim2.state[0],
-            dmdim2.state[1] * 1.325,
+            dmdim2.state[1] * 1.3,
             dmdim2.state[2] + 1,
             dmdim2.state[3] + 1,
             dmdim2.state[4] * 1.65,
@@ -306,7 +298,7 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
       darkmatter.update((state) => darkmatter.state - dmdim3.state[4]);
       dmdim3.update((state) => [
             dmdim3.state[0],
-            dmdim3.state[1] * 1.4,
+            dmdim3.state[1] * 1.35,
             dmdim3.state[2] + 1,
             dmdim3.state[3] + 1,
             dmdim3.state[4] * 1.9,
@@ -364,22 +356,22 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
     var dm3persec = ref.watch(dm3persecProvider.notifier);
     if (darkmatter.state >= 50000) {
       sacrificepointincrease.update((state) =>
-          (pow((darkmatter.state - 50000), 0.35) *
-                  (1 + sacrificecount.state * 0.1))
+          (pow((darkmatter.state - 50000), 0.4) *
+                  (1 + sacrificecount.state * 0.05))
               .round()
               .toDouble());
       sacrificepoint.update(
           (state) => sacrificepoint.state + sacrificepointincrease.state);
       sacrificecount.update((state) => sacrificecount.state + 1);
       spmultiplier.update((state) =>
-          (((1 + sacrificepoint.state * 0.002) *
-                      pow(1.02, sacrificecount.state)) *
+          (((1 + sacrificepoint.state * 0.004) *
+                      pow(1.015, sacrificecount.state)) *
                   100)
               .round() /
           100);
       spmultiupg.update((state) =>
-          (1 + sacrificepoint.state * 0.0012) *
-          (1 + 0.0005 * sacrificecount.state));
+          (1 + sacrificepoint.state * 0.002) *
+          (1 + 0.0004 * sacrificecount.state));
       clickpower.update((state) => 0);
       dmsoftcapdiviser.update((state) => 1);
       upgradepower.update((state) => 0);
@@ -409,14 +401,14 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
             100,
           ]);
       dmdim2.update((state) => [
-            15,
+            12,
             1.0,
             0.0,
             0,
             1000,
           ]);
       dmdim3.update((state) => [
-            225,
+            144,
             1.0,
             0.0,
             0,
@@ -484,14 +476,14 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
           100,
         ]);
     dmdim2.update((state) => [
-          15,
+          12,
           1.0,
           0.0,
           0,
           1000,
         ]);
     dmdim3.update((state) => [
-          225,
+          144,
           1.0,
           0.0,
           0,

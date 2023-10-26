@@ -27,6 +27,6 @@ final sacrificecountProvider =
     StateProvider((ref) => 0.0); //↓格納してる数値は 1stから順に「ex倍率/倍率/所持数/購入数/コスト」
 final dmdim1Provider = StateProvider<List<num>>((ref) => [1, 1.0, 0.0, 0, 100]);
 final dmdim2Provider =
-    StateProvider<List<num>>((ref) => [15, 1.0, 0.0, 0, 1000]);
+    StateProvider<List<num>>((ref) => [12, 1.0, 0.0, 0, 1000]);
 final dmdim3Provider =
-    StateProvider<List<num>>((ref) => [225, 1.0, 0.0, 0, 10000]);
+    StateProvider<List<num>>((ref) => [144, 1.0, 0.0, 0, 10000]);

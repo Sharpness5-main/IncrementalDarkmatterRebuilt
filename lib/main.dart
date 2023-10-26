@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:incremental_darkmatter/screens/home/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const ProviderScope(child: MyApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // ignore: non_constant_identifier_names
+  final SharedPreferencesProvider =
+      Provider<SharedPreferences>((_) => throw UnimplementedError());
+  runApp(ProviderScope(overrides: [
+    SharedPreferencesProvider.overrideWithValue(
+      await SharedPreferences.getInstance(),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
@@ -16,6 +25,7 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
+      themeMode: ThemeMode.dark,
       home: const Home(),
     );
   }
