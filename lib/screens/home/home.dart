@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../valueable_provider.dart';
 import 'home_notifier.dart';
 
@@ -9,7 +8,7 @@ class Home extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // ignore: unused_local_variable
-    final state = ref.watch(homeRiverpodState);
+//    final state = ref.watch(homeRiverpodState);
     final homenotifier = ref.watch(homeRiverpodState.notifier);
     var dmChangeDetectStream = ref.watch(darkmatterProvider.notifier).stream;
     StreamBuilder<num>(
@@ -29,7 +28,64 @@ class Home extends ConsumerWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(46),
         child: AppBar(
-          title: const Text("Incremental Darkmatter pre_release"),
+          title: const Text("Incremental Darkmatter"),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            const SizedBox(
+              height: 55,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple,
+                ),
+                child: Text(
+                  'Incremental Darkmatter',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+            ),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.settings),
+              label: const Text('Settings'),
+              style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(200, 40), alignment: Alignment.center),
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings');
+              },
+            ),
+            const SizedBox(height: 5),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.star),
+              label: const Text('Achievements'),
+              style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(200, 40), alignment: Alignment.center),
+              onPressed: () {
+                Navigator.pushNamed(context, '/achievements');
+              },
+            ),
+            const SizedBox(height: 5),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.arrow_upward),
+              label: const Text('Upgrades'),
+              style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(200, 40), alignment: Alignment.center),
+              onPressed: () {
+                Navigator.pushNamed(context, '/upgrades');
+              },
+            ),
+            const SizedBox(height: 50),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.arrow_left_sharp),
+              label: const Text('Close'),
+              style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(200, 40), alignment: Alignment.center),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
         ),
       ),
       body: Center(
@@ -379,10 +435,6 @@ class Home extends ConsumerWidget {
                 ]),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: homenotifier.reset,
-        child: const Text("RESET"),
       ),
     );
   }

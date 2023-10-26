@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:incremental_darkmatter/screens/Achievements/achievements.dart';
+import 'package:incremental_darkmatter/screens/Settings/settings.dart';
 import 'package:incremental_darkmatter/screens/home/home.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:incremental_darkmatter/screens/upgrades/upgrades.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // ignore: non_constant_identifier_names
-  final SharedPreferencesProvider =
-      Provider<SharedPreferences>((_) => throw UnimplementedError());
-  runApp(ProviderScope(overrides: [
-    SharedPreferencesProvider.overrideWithValue(
-      await SharedPreferences.getInstance(),
-    ),
-  ], child: const MyApp()));
+void main() {
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
@@ -27,6 +21,12 @@ class MyApp extends ConsumerWidget {
       ),
       themeMode: ThemeMode.dark,
       home: const Home(),
+      routes: {
+        '/upgrades': (context) => const UpgradeScreen(),
+        '/achievements': (context) => const AchievementScreen(),
+        '/settings': (context) => const SettingScreen(),
+        '/main': (context) => const Home(),
+      },
     );
   }
 }
