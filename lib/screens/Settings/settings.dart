@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../valueable_provider.dart';
 import 'settings_notifier.dart';
+import '../../ListObjectSaves/dimension_model.dart';
 
+// ignore: must_be_immutable
 class SettingScreen extends ConsumerWidget {
-  const SettingScreen({Key? key}) : super(key: key);
+  SettingScreen({Key? key}) : super(key: key);
+  DimensionProvider dimensionProvider = DimensionProvider();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settingnotifier = ref.watch(settingRiverpodState.notifier);
@@ -31,7 +34,7 @@ class SettingScreen extends ConsumerWidget {
             const SizedBox(height: 30),
             RichText(
               text: const TextSpan(
-                  text: 'Savedata settings',
+                  text: '========= Savedata Settings =========',
                   style: TextStyle(color: Colors.black, fontSize: 20)),
               textAlign: TextAlign.center,
             ),
@@ -40,14 +43,19 @@ class SettingScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: settingnotifier.savedata,
+                  onPressed: () {
+                    settingnotifier.savedata();
+                    dimensionProvider.setInitialSharedPrefrences();
+                  },
                   style: ElevatedButton.styleFrom(
                       fixedSize: const Size(150, 40),
                       alignment: Alignment.center),
                   child: const Text("Save the game"),
                 ),
                 ElevatedButton(
-                  onPressed: settingnotifier.resetdata,
+                  onPressed: () {
+                    settingnotifier.resetdata();
+                  },
                   style: ElevatedButton.styleFrom(
                       fixedSize: const Size(150, 40),
                       alignment: Alignment.center),
@@ -58,8 +66,8 @@ class SettingScreen extends ConsumerWidget {
             RichText(
               text: const TextSpan(
                   text:
-                      'This game has no autosave feature. Don\'t forget to save your game!\nResetting the game will delete all your progress with no secrets.',
-                  style: TextStyle(color: Colors.red, fontSize: 12)),
+                      'This game has no autosave feature.\nDon\'t forget to save your game!',
+                  style: TextStyle(color: Colors.red, fontSize: 15)),
               textAlign: TextAlign.center,
             )
           ])),

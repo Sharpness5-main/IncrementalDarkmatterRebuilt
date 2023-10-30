@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'dart:async';
 
@@ -30,7 +31,8 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
   // HomeRiverpodNotifier(this.ref):super(const HomeRiverpodState()){initState();}
   final Ref ref;
 
-  void initState() {}
+  void initState() async {}
+
   void updateProcess() {
     //ここが常時実行(要するにゲームループ)
     var fps = ref.watch(gamefpsProvider.notifier);
