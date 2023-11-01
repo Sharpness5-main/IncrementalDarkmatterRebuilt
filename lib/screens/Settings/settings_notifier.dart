@@ -8,7 +8,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'dart:async';
-import '../../ListObjectSaves/dimension_model.dart';
 import '../../valueable_provider.dart';
 part 'settings_notifier.freezed.dart';
 
@@ -24,7 +23,6 @@ final settingRiverpodState =
         (ref) => SettingRiverpodNotifier(ref)..initState());
 
 class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
-  DimensionProvider dimensionProvider = DimensionProvider();
   SettingRiverpodNotifier(this.ref)
       : super(const SettingRiverpodState(content: 0)) {
     initState();
@@ -32,59 +30,7 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
 
   final Ref ref;
 
-  void initState() async {
-    final prefs = await SharedPreferences.getInstance();
-    var darkmatter = ref.watch(darkmatterProvider.notifier);
-    var dmperclick = ref.watch(dmperclickProvider.notifier);
-    var dmsoftcapdiviser = ref.watch(dmsoftcapdiviserProvider.notifier);
-    var clickpower = ref.watch(clickpowerProvider.notifier);
-    var cpupgcost = ref.watch(cpupgcostProvider.notifier);
-    var cpmultiplier = ref.watch(cpmultiplierProvider.notifier);
-    var upgradepower = ref.watch(upgradepowerProvider.notifier);
-    var upupgcost = ref.watch(upupgcostProvider.notifier);
-    var upmultiplier = ref.watch(upmultiplierProvider.notifier);
-    var enhancepower = ref.watch(enhancepowerProvider.notifier);
-    var epupgcost = ref.watch(epupgcostProvider.notifier);
-    var epmultiplier = ref.watch(epmultiplierProvider.notifier);
-    var freecpupg = ref.watch(freecpupgProvider.notifier);
-    var freeupupg = ref.watch(freeupupgProvider.notifier);
-    var freeepupg = ref.watch(freeepupgProvider.notifier);
-    var sacrificepoint = ref.watch(sacrificepointProvider.notifier);
-    var spmultiplier = ref.watch(spmultiplierProvider.notifier);
-    var spmultiupg = ref.watch(spmultiupgProvider.notifier);
-    var sacrificepointincrease =
-        ref.watch(sacrificepointincreaseProvider.notifier);
-    var sacrificecount = ref.watch(sacrificecountProvider.notifier);
-    var dm1persec = ref.watch(dm1persecProvider.notifier);
-    var dm2persec = ref.watch(dm2persecProvider.notifier);
-    var dm3persec = ref.watch(dm3persecProvider.notifier);
-    darkmatter.update((state) => prefs.getDouble('darkmatter') ?? 0);
-    dmperclick.update((state) => prefs.getDouble('dmperclick') ?? 1);
-    dmsoftcapdiviser
-        .update((state) => prefs.getDouble('dmsoftcapdiviser') ?? 1);
-    clickpower.update((state) => prefs.getDouble('clickpower') ?? 0);
-    cpupgcost.update((state) => prefs.getDouble('cpupgcost') ?? 30);
-    cpmultiplier.update((state) => prefs.getDouble('cpmultiplier') ?? 1);
-    upgradepower.update((state) => prefs.getDouble('upgradepower') ?? 0);
-    upupgcost.update((state) => prefs.getDouble('upupgcost') ?? 400);
-    upmultiplier.update((state) => prefs.getDouble('upmultiplier') ?? 1);
-    enhancepower.update((state) => prefs.getDouble('enhancepower') ?? 0);
-    epupgcost.update((state) => prefs.getDouble('epupgcost') ?? 5000);
-    epmultiplier.update((state) => prefs.getDouble('epmultiplier') ?? 1);
-    freecpupg.update((state) => prefs.getDouble('freecpupg') ?? 0);
-    freeupupg.update((state) => prefs.getDouble('freeupupg') ?? 0);
-    freeepupg.update((state) => prefs.getDouble('freeepupg') ?? 0);
-    sacrificepoint.update((state) => prefs.getDouble('sacrificepoint') ?? 0);
-    spmultiplier.update((state) => prefs.getDouble('spmultiplier') ?? 1);
-    spmultiupg.update((state) => prefs.getDouble('spmultiupg') ?? 1);
-    sacrificepointincrease
-        .update((state) => prefs.getDouble('sacrificepointincrease') ?? 0);
-    sacrificecount.update((state) => prefs.getDouble('sacrificecount') ?? 0);
-    dm1persec.update((state) => prefs.getDouble('dm1persec') ?? 0);
-    dm2persec.update((state) => prefs.getDouble('dm2persec') ?? 0);
-    dm3persec.update((state) => prefs.getDouble('dm3persec') ?? 0);
-    dimensionProvider.syncDataWithProvider();
-  }
+  void initState() {}
 
   void savedata() async {
     final prefs = await SharedPreferences.getInstance();
@@ -112,6 +58,12 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
     var dm1persec = ref.watch(dm1persecProvider.notifier);
     var dm2persec = ref.watch(dm2persecProvider.notifier);
     var dm3persec = ref.watch(dm3persecProvider.notifier);
+    var dmdim1 = ref.watch(dmdim1Provider.notifier);
+    var dmdim2 = ref.watch(dmdim2Provider.notifier);
+    var dmdim3 = ref.watch(dmdim3Provider.notifier);
+    var dmdim1str = ref.watch(dmdim1strProvider.notifier);
+    var dmdim2str = ref.watch(dmdim2strProvider.notifier);
+    var dmdim3str = ref.watch(dmdim3strProvider.notifier);
     prefs.setDouble('darkmatter', darkmatter.state);
     prefs.setDouble('dmperclick', dmperclick.state);
     prefs.setDouble('dmsoftcapdiviser', dmsoftcapdiviser.state);
@@ -135,6 +87,30 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
     prefs.setDouble('dm1persec', dm1persec.state);
     prefs.setDouble('dm2persec', dm2persec.state);
     prefs.setDouble('dm3persec', dm3persec.state);
+    dmdim1str.update((state) => [
+          dmdim1.state[0].toString(),
+          dmdim1.state[1].toString(),
+          dmdim1.state[2].toString(),
+          dmdim1.state[3].toString(),
+          dmdim1.state[4].toString(),
+        ]);
+    dmdim2str.update((state) => [
+          dmdim2.state[0].toString(),
+          dmdim2.state[1].toString(),
+          dmdim2.state[2].toString(),
+          dmdim2.state[3].toString(),
+          dmdim2.state[4].toString(),
+        ]);
+    dmdim3str.update((state) => [
+          dmdim3.state[0].toString(),
+          dmdim3.state[1].toString(),
+          dmdim3.state[2].toString(),
+          dmdim3.state[3].toString(),
+          dmdim3.state[4].toString(),
+        ]);
+    prefs.setStringList('dmdim1', dmdim1str.state);
+    prefs.setStringList('dmdim2', dmdim2str.state);
+    prefs.setStringList('dmdim3', dmdim3str.state);
   }
 
   void resetdata() {
@@ -162,6 +138,9 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
     var dmdim1 = ref.watch(dmdim1Provider.notifier);
     var dmdim2 = ref.watch(dmdim2Provider.notifier);
     var dmdim3 = ref.watch(dmdim3Provider.notifier);
+    var dmdim1str = ref.watch(dmdim1strProvider.notifier);
+    var dmdim2str = ref.watch(dmdim2strProvider.notifier);
+    var dmdim3str = ref.watch(dmdim3strProvider.notifier);
     var dm1persec = ref.watch(dm1persecProvider.notifier);
     var dm2persec = ref.watch(dm2persecProvider.notifier);
     var dm3persec = ref.watch(dm3persecProvider.notifier);
@@ -208,6 +187,27 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
           0.0,
           0,
           10000,
+        ]);
+    dmdim1str.update((state) => [
+          '1',
+          '1.0',
+          '0.0',
+          '0',
+          '100',
+        ]);
+    dmdim2str.update((state) => [
+          '12',
+          '1.0',
+          '0.0',
+          '0',
+          '1000',
+        ]);
+    dmdim3str.update((state) => [
+          '144',
+          '1.0',
+          '0.0',
+          '0',
+          '10000',
         ]);
   }
 }

@@ -30,3 +30,24 @@ final dmdim2Provider =
     StateProvider<List<num>>((ref) => [12, 1.0, 0.0, 0, 1000]);
 final dmdim3Provider =
     StateProvider<List<num>>((ref) => [144, 1.0, 0.0, 0, 10000]);
+final dmdim1strProvider = StateProvider<List<String>>((ref) => [
+      '1',
+      '1.0',
+      '0.0',
+      '0',
+      '100',
+    ]);
+final dmdim2strProvider = StateProvider<List<String>>((ref) => [
+      '12',
+      '1.0',
+      '0.0',
+      '0',
+      '1000',
+    ]);
+final dmdim3strProvider = StateProvider<List<String>>((ref) => [
+      '144',
+      '1.0',
+      '0.0',
+      '0',
+      '10000',
+    ]);

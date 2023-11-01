@@ -24,7 +24,7 @@ class MyApp extends ConsumerWidget {
       routes: {
         '/upgrades': (context) => const UpgradeScreen(),
         '/achievements': (context) => const AchievementScreen(),
-        '/settings': (context) => SettingScreen(),
+        '/settings': (context) => const SettingScreen(),
       },
     );
   }

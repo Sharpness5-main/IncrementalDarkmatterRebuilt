@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../valueable_provider.dart';
 import 'settings_notifier.dart';
-import '../../ListObjectSaves/dimension_model.dart';
 
 // ignore: must_be_immutable
 class SettingScreen extends ConsumerWidget {
-  SettingScreen({Key? key}) : super(key: key);
-  DimensionProvider dimensionProvider = DimensionProvider();
+  const SettingScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settingnotifier = ref.watch(settingRiverpodState.notifier);
@@ -45,7 +43,6 @@ class SettingScreen extends ConsumerWidget {
                 ElevatedButton(
                   onPressed: () {
                     settingnotifier.savedata();
-                    dimensionProvider.setInitialSharedPrefrences();
                   },
                   style: ElevatedButton.styleFrom(
                       fixedSize: const Size(150, 40),
