@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../valueable_provider.dart';
+import '../../variable_provider.dart';
 import 'home_notifier.dart';
 
 class Home extends ConsumerWidget {
@@ -343,25 +343,6 @@ class Home extends ConsumerWidget {
                 ],
               );
             }),
-            // Consumer(builder: (context, ref, child) {
-            //   return Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //     children: <Widget>[
-            //       const Text("4th Dim"),
-            //       Text(
-            //           "${(ref.watch(dmdim4Provider)[0] * ref.watch(dmdim4Provider)[1] * 100).round() / 100}x"),
-            //       Text("  ${ref.watch(dmdim4Provider)[2].round()}"),
-            //       Text("Cost ${ref.watch(dmdim4Provider)[4].round()}"),
-            //       ElevatedButton(
-            //         onPressed: homenotifier.buyDmDim4,
-            //         style: ElevatedButton.styleFrom(
-            //             fixedSize: const Size(70, 30),
-            //             alignment: Alignment.center),
-            //         child: const Text("Buy"),
-            //       ),
-            //     ],
-            //   );
-            // }),
             RichText(
               text: const TextSpan(
                   text:
@@ -430,8 +411,6 @@ class Home extends ConsumerWidget {
                     ));
                   }),
                   Text("DM Multi: ${ref.watch(spmultiplierProvider)}x"),
-                  Text(
-                      "Upg Multi: ${((ref.watch(spmultiupgProvider)) * 100).round() / 100}x"),
                 ]),
           ],
         ),

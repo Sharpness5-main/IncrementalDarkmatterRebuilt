@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../valueable_provider.dart';
+import '../../variable_provider.dart';
 import 'settings_notifier.dart';
 
 // ignore: must_be_immutable
