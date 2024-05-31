@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../valueable_provider.dart';
+import '../../variable_provider.dart';
 import 'home_notifier.dart';
 
 class Home extends ConsumerWidget {
@@ -218,64 +218,68 @@ class Home extends ConsumerWidget {
                     child: const Text("Upgrade"),
                   ),
                 ]),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Consumer(builder: (context, ref, child) {
-                    return RichText(
-                        text: TextSpan(
-                      text: 'CP Upgrader\n',
-                      style: const TextStyle(color: Colors.black, fontSize: 13),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text:
-                              "${ref.watch(upgradepowerProvider).round()}+${ref.watch(freeupupgProvider)}",
-                          style: const TextStyle(
-                              color: Colors.purple, fontSize: 18),
-                        ),
-                      ],
-                    ));
-                  }),
-                  Text(
-                      "Multi: ${(ref.watch(upmultiplierProvider) * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
-                  Text("Cost: ${ref.watch(upupgcostProvider).round()}"),
-                  ElevatedButton(
-                    onPressed: homenotifier.upgradeUpgradePower,
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(90, 35),
-                        alignment: Alignment.center),
-                    child: const Text("Upgrade"),
-                  ),
-                ]),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Consumer(builder: (context, ref, child) {
-                    return RichText(
-                        text: TextSpan(
-                      text: 'CP Enhancer\n',
-                      style: const TextStyle(color: Colors.black, fontSize: 14),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text:
-                              "${ref.watch(enhancepowerProvider).round()}+${((ref.watch(freeepupgProvider) * 100).round() / 100)}",
-                          style: const TextStyle(
-                              color: Colors.purple, fontSize: 18),
-                        ),
-                      ],
-                    ));
-                  }),
-                  Text(
-                      "Multi: ${(ref.watch(epmultiplierProvider) * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
-                  Text("Cost: ${ref.watch(epupgcostProvider).round()}"),
-                  ElevatedButton(
-                    onPressed: homenotifier.upgradeEnhancePower,
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(90, 35),
-                        alignment: Alignment.center),
-                    child: const Text("Upgrade"),
-                  ),
-                ]),
+            if (ref.watch(mainupgradesProvider) >= 2.0)
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Consumer(builder: (context, ref, child) {
+                      return RichText(
+                          text: TextSpan(
+                        text: 'CP Upgrader\n',
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 13),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text:
+                                "${ref.watch(upgradepowerProvider).round()}+${ref.watch(freeupupgProvider)}",
+                            style: const TextStyle(
+                                color: Colors.purple, fontSize: 18),
+                          ),
+                        ],
+                      ));
+                    }),
+                    Text(
+                        "Multi: ${(ref.watch(upmultiplierProvider) * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
+                    Text("Cost: ${ref.watch(upupgcostProvider).round()}"),
+                    ElevatedButton(
+                      onPressed: homenotifier.upgradeUpgradePower,
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: const Size(90, 35),
+                          alignment: Alignment.center),
+                      child: const Text("Upgrade"),
+                    ),
+                  ]),
+            if (ref.watch(mainupgradesProvider) >= 4.0)
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Consumer(builder: (context, ref, child) {
+                      return RichText(
+                          text: TextSpan(
+                        text: 'CP Enhancer\n',
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 14),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text:
+                                "${ref.watch(enhancepowerProvider).round()}+${((ref.watch(freeepupgProvider) * 100).round() / 100)}",
+                            style: const TextStyle(
+                                color: Colors.purple, fontSize: 18),
+                          ),
+                        ],
+                      ));
+                    }),
+                    Text(
+                        "Multi: ${(ref.watch(epmultiplierProvider) * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
+                    Text("Cost: ${ref.watch(epupgcostProvider).round()}"),
+                    ElevatedButton(
+                      onPressed: homenotifier.upgradeEnhancePower,
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: const Size(90, 35),
+                          alignment: Alignment.center),
+                      child: const Text("Upgrade"),
+                    ),
+                  ]),
             RichText(
               text: const TextSpan(
                   text:
@@ -283,85 +287,77 @@ class Home extends ConsumerWidget {
                   style: TextStyle(color: Colors.black, fontSize: 16)),
               textAlign: TextAlign.center,
             ),
-            Consumer(builder: (context, ref, child) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  const Text("1st Dim"),
-                  Text(
-                      "${(ref.watch(dmdim1Provider)[0] * ref.watch(dmdim1Provider)[1] * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
-                  Text(
-                      "${ref.watch(dmdim1Provider)[2].round()}[${ref.watch(dmdim1Provider)[3]}]"),
-                  Text("Cost: ${ref.watch(dmdim1Provider)[4].round()}"),
-                  ElevatedButton(
-                    onPressed: homenotifier.buyDmDim1,
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(70, 30),
-                        alignment: Alignment.center),
-                    child: const Text("Buy"),
-                  ),
-                ],
-              );
-            }),
-            Consumer(builder: (context, ref, child) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  const Text("2nd Dim"),
-                  Text(
-                      "${(ref.watch(dmdim2Provider)[0] * ref.watch(dmdim2Provider)[1] * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
-                  Text(
-                      "${ref.watch(dmdim2Provider)[2].round()}[${ref.watch(dmdim2Provider)[3]}]"),
-                  Text("Cost: ${ref.watch(dmdim2Provider)[4].round()}"),
-                  ElevatedButton(
-                    onPressed: homenotifier.buyDmDim2,
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(70, 30),
-                        alignment: Alignment.center),
-                    child: const Text("Buy"),
-                  ),
-                ],
-              );
-            }),
-            Consumer(builder: (context, ref, child) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  const Text("3rd Dim"),
-                  Text(
-                      "${(ref.watch(dmdim3Provider)[0] * ref.watch(dmdim3Provider)[1] * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
-                  Text(
-                      "${ref.watch(dmdim3Provider)[2].round()}[${ref.watch(dmdim3Provider)[3]}]"),
-                  Text("Cost: ${ref.watch(dmdim3Provider)[4].round()}"),
-                  ElevatedButton(
-                    onPressed: homenotifier.buyDmDim3,
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(70, 30),
-                        alignment: Alignment.center),
-                    child: const Text("Buy"),
-                  ),
-                ],
-              );
-            }),
-            // Consumer(builder: (context, ref, child) {
-            //   return Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //     children: <Widget>[
-            //       const Text("4th Dim"),
-            //       Text(
-            //           "${(ref.watch(dmdim4Provider)[0] * ref.watch(dmdim4Provider)[1] * 100).round() / 100}x"),
-            //       Text("  ${ref.watch(dmdim4Provider)[2].round()}"),
-            //       Text("Cost ${ref.watch(dmdim4Provider)[4].round()}"),
-            //       ElevatedButton(
-            //         onPressed: homenotifier.buyDmDim4,
-            //         style: ElevatedButton.styleFrom(
-            //             fixedSize: const Size(70, 30),
-            //             alignment: Alignment.center),
-            //         child: const Text("Buy"),
-            //       ),
-            //     ],
-            //   );
-            // }),
+            if (ref.watch(mainupgradesProvider) < 1.0)
+              RichText(
+                text: const TextSpan(
+                    text:
+                        'Dimensions are locked.\nYou can unlock them via upgrades.',
+                    style: TextStyle(color: Colors.black, fontSize: 14)),
+                textAlign: TextAlign.center,
+              ),
+            if (ref.watch(mainupgradesProvider) >= 1.0)
+              Consumer(builder: (context, ref, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    const Text("1st Dim"),
+                    Text(
+                        "${(ref.watch(dmdim1Provider)[0] * ref.watch(dmdim1Provider)[1] * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
+                    Text(
+                        "${ref.watch(dmdim1Provider)[2].round()}[${ref.watch(dmdim1Provider)[3]}]"),
+                    Text("Cost: ${ref.watch(dmdim1Provider)[4].round()}"),
+                    ElevatedButton(
+                      onPressed: homenotifier.buyDmDim1,
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: const Size(70, 30),
+                          alignment: Alignment.center),
+                      child: const Text("Buy"),
+                    ),
+                  ],
+                );
+              }),
+            if (ref.watch(mainupgradesProvider) >= 3.0)
+              Consumer(builder: (context, ref, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    const Text("2nd Dim"),
+                    Text(
+                        "${(ref.watch(dmdim2Provider)[0] * ref.watch(dmdim2Provider)[1] * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
+                    Text(
+                        "${ref.watch(dmdim2Provider)[2].round()}[${ref.watch(dmdim2Provider)[3]}]"),
+                    Text("Cost: ${ref.watch(dmdim2Provider)[4].round()}"),
+                    ElevatedButton(
+                      onPressed: homenotifier.buyDmDim2,
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: const Size(70, 30),
+                          alignment: Alignment.center),
+                      child: const Text("Buy"),
+                    ),
+                  ],
+                );
+              }),
+            if (ref.watch(mainupgradesProvider) >= 5.0)
+              Consumer(builder: (context, ref, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    const Text("3rd Dim"),
+                    Text(
+                        "${(ref.watch(dmdim3Provider)[0] * ref.watch(dmdim3Provider)[1] * ref.watch(spmultiplierProvider) * 100).round() / 100}x"),
+                    Text(
+                        "${ref.watch(dmdim3Provider)[2].round()}[${ref.watch(dmdim3Provider)[3]}]"),
+                    Text("Cost: ${ref.watch(dmdim3Provider)[4].round()}"),
+                    ElevatedButton(
+                      onPressed: homenotifier.buyDmDim3,
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: const Size(70, 30),
+                          alignment: Alignment.center),
+                      child: const Text("Buy"),
+                    ),
+                  ],
+                );
+              }),
             RichText(
               text: const TextSpan(
                   text:
@@ -430,8 +426,6 @@ class Home extends ConsumerWidget {
                     ));
                   }),
                   Text("DM Multi: ${ref.watch(spmultiplierProvider)}x"),
-                  Text(
-                      "Upg Multi: ${((ref.watch(spmultiupgProvider)) * 100).round() / 100}x"),
                 ]),
           ],
         ),
