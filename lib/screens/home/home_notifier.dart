@@ -31,6 +31,7 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
   final Ref ref;
 
   void initState() async {
+    //load savedata
     final prefs = await SharedPreferences.getInstance();
     var darkmatter = ref.watch(darkmatterProvider.notifier);
     var dmperclick = ref.watch(dmperclickProvider.notifier);
@@ -38,6 +39,8 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
     var dmpersec = ref.watch(generaldmpersecProvider.notifier);
     var dmsoftcapdiviser = ref.watch(dmsoftcapdiviserProvider.notifier);
     var clickpower = ref.watch(clickpowerProvider.notifier);
+    var clickcount = ref.watch(clickcountProvider.notifier);
+    var clickcountmultiplier = ref.watch(clickcountmultiplierProvider.notifier);
     var cpupgcost = ref.watch(cpupgcostProvider.notifier);
     var cpmultiplier = ref.watch(cpmultiplierProvider.notifier);
     var upgradepower = ref.watch(upgradepowerProvider.notifier);
@@ -46,6 +49,8 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
     var enhancepower = ref.watch(enhancepowerProvider.notifier);
     var epupgcost = ref.watch(epupgcostProvider.notifier);
     var epmultiplier = ref.watch(epmultiplierProvider.notifier);
+    var mainupgrades = ref.watch(mainupgradesProvider.notifier);
+    var dimensionupgrade = ref.watch(dimensionupgradestrProvider.notifier);
     var freecpupg = ref.watch(freecpupgProvider.notifier);
     var freeupupg = ref.watch(freeupupgProvider.notifier);
     var freeepupg = ref.watch(freeepupgProvider.notifier);
@@ -63,11 +68,11 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
     var dmdim1str = ref.watch(dmdim1strProvider.notifier);
     var dmdim2str = ref.watch(dmdim2strProvider.notifier);
     var dmdim3str = ref.watch(dmdim3strProvider.notifier);
-    var dmbooster = ref.watch(permaupgDmboosterMultiplierProvider.notifier);
+    var dmbooster = ref.watch(permaupgDmboosterProvider.notifier);
     var dmboostercost = ref.watch(permaupgDmboosterCostProvider.notifier);
     var dmboostermultiplier =
         ref.watch(permaupgDmboosterMultiplierProvider.notifier);
-    var spbooster = ref.watch(permaupgSpboosterMultiplierProvider.notifier);
+    var spbooster = ref.watch(permaupgSpboosterProvider.notifier);
     var spboostercost = ref.watch(permaupgSpboosterCostProvider.notifier);
     var spboostermultiplier =
         ref.watch(permaupgSpboosterMultiplierProvider.notifier);
@@ -76,6 +81,9 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
     dmsoftcapdiviser
         .update((state) => prefs.getDouble('dmsoftcapdiviser') ?? 1);
     clickpower.update((state) => prefs.getDouble('clickpower') ?? 0);
+    clickcount.update((state) => prefs.getDouble('clickcount') ?? 0);
+    clickcountmultiplier
+        .update((state) => prefs.getDouble('clickcountmultiplier') ?? 1);
     cpupgcost.update((state) => prefs.getDouble('cpupgcost') ?? 30);
     cpmultiplier.update((state) => prefs.getDouble('cpmultiplier') ?? 1);
     upgradepower.update((state) => prefs.getDouble('upgradepower') ?? 0);
@@ -84,6 +92,7 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
     enhancepower.update((state) => prefs.getDouble('enhancepower') ?? 0);
     epupgcost.update((state) => prefs.getDouble('epupgcost') ?? 5000);
     epmultiplier.update((state) => prefs.getDouble('epmultiplier') ?? 1);
+    mainupgrades.update((state) => prefs.getDouble('mainupgrades') ?? 0);
     freecpupg.update((state) => prefs.getDouble('freecpupg') ?? 0);
     freeupupg.update((state) => prefs.getDouble('freeupupg') ?? 0);
     freeepupg.update((state) => prefs.getDouble('freeepupg') ?? 0);
@@ -132,6 +141,16 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
           '0',
           '10000',
         ]);
+    dimensionupgrade.update((state) =>
+        prefs.getStringList('dimensionupgrade') ??
+        [
+          '0',
+          '0',
+          '0',
+          '0',
+          '0',
+          '0',
+        ]);
     dmdim1.update((state) => [
           num.parse(dmdim1str.state[0]),
           num.parse(dmdim1str.state[1]),
@@ -153,6 +172,13 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
           num.parse(dmdim3str.state[3]),
           num.parse(dmdim3str.state[4]),
         ]);
+    dmdim1.update((state) => [
+          num.parse(dmdim1str.state[0]).toInt(),
+          num.parse(dmdim1str.state[1]).toInt(),
+          num.parse(dmdim1str.state[2]).toInt(),
+          num.parse(dmdim1str.state[3]).toInt(),
+          num.parse(dmdim1str.state[4]).toInt(),
+        ]);
   }
 
   void updateProcess() {
@@ -165,7 +191,29 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
     );
   }
 
+  double calcMultiplier() {
+    var cpmultiplier = ref.watch(cpmultiplierProvider.notifier);
+    var upmultiplier = ref.watch(upmultiplierProvider.notifier);
+    var epmultiplier = ref.watch(epmultiplierProvider.notifier);
+    var spmultiplier = ref.watch(spmultiplierProvider.notifier);
+    var dmboostermultiplier =
+        ref.watch(permaupgDmboosterMultiplierProvider.notifier);
+    var clickcountmultiplier = ref.watch(clickcountmultiplierProvider.notifier);
+    var dimensionupgrade = ref.watch(dimensionupgradestrProvider);
+    var tempmultiplier = 1.0;
+    tempmultiplier = cpmultiplier.state *
+        upmultiplier.state *
+        epmultiplier.state *
+        spmultiplier.state *
+        dmboostermultiplier.state;
+    if (dimensionupgrade[0] == "1") {
+      tempmultiplier *= clickcountmultiplier.state;
+    }
+    return tempmultiplier;
+  }
+
   void flameUpdate(Timer timer) {
+    var fps = ref.watch(gamefpsProvider.notifier);
     var darkmatter = ref.watch(darkmatterProvider.notifier);
     var dmsoftcapdiviser = ref.watch(dmsoftcapdiviserProvider.notifier);
     var dmperclick = ref.watch(dmperclickProvider.notifier);
@@ -177,8 +225,8 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
     var spbooster = ref.watch(permaupgSpboosterMultiplierProvider.notifier);
     dmperclick
         .update((state) => (cpmultipliers.state / dmsoftcapdiviser.state));
-    darkmatter.update((state) =>
-        (darkmatter.state + (dmpersec.state / dmsoftcapdiviser.state)));
+    darkmatter.update((state) => (darkmatter.state +
+        (dmpersec.state / (dmsoftcapdiviser.state * fps.state))));
     if (darkmatter.state >= 50000) {
       sacrificepointincrease.update((state) =>
           (pow((darkmatter.state - 50000), 0.3) *
@@ -200,11 +248,16 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
   void incrementCounter() {
     var darkmatter = ref.watch(darkmatterProvider.notifier);
     var dmperclick = ref.watch(dmperclickProvider.notifier);
+    var clickcount = ref.watch(clickcountProvider.notifier);
     var dmsoftcapdiviser = ref.watch(dmsoftcapdiviserProvider.notifier);
     var cpmultipliers = ref.watch(generalcpmultiplierProvider.notifier);
+    var clickcountmultiplier = ref.watch(clickcountmultiplierProvider.notifier);
+    cpmultipliers.state = calcMultiplier();
     dmperclick
         .update((state) => (cpmultipliers.state / dmsoftcapdiviser.state));
     darkmatter.update((state) => darkmatter.state + dmperclick.state);
+    clickcount.update((state) => clickcount.state + 1);
+    clickcountmultiplier.state = 1.0 + sqrt(clickcount.state) * 0.03;
     if (darkmatter.state >= 214748) {
       dmsoftcapdiviser
           .update((state) => pow((darkmatter.state / 214748), 2).toDouble());
@@ -217,13 +270,8 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
     var darkmatter = ref.watch(darkmatterProvider.notifier);
     var clickpower = ref.watch(clickpowerProvider.notifier);
     var cpupgcost = ref.watch(cpupgcostProvider.notifier);
-    var cpmultipliers = ref.watch(generalcpmultiplierProvider.notifier);
     var cpmultiplier = ref.watch(cpmultiplierProvider.notifier);
-    var upmultiplier = ref.watch(upmultiplierProvider.notifier);
-    var epmultiplier = ref.watch(epmultiplierProvider.notifier);
-    var spmultiplier = ref.watch(spmultiplierProvider.notifier);
-    var dmboostermultiplier =
-        ref.watch(permaupgDmboosterMultiplierProvider.notifier);
+    var cpmultipliers = ref.watch(generalcpmultiplierProvider.notifier);
     var freecpupg = ref.watch(freecpupgProvider.notifier);
     if (darkmatter.state >= cpupgcost.state) {
       darkmatter.update((state) => darkmatter.state - cpupgcost.state);
@@ -231,12 +279,7 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
       cpmultiplier.update((state) =>
           (pow(1.03, (clickpower.state + freecpupg.state)) *
               (1 + (clickpower.state + freecpupg.state) * 0.15)));
-      cpmultipliers.update((state) =>
-          cpmultiplier.state *
-          upmultiplier.state *
-          epmultiplier.state *
-          spmultiplier.state *
-          dmboostermultiplier.state);
+      cpmultipliers.state = calcMultiplier();
       if (clickpower.state <= 15) {
         cpupgcost.update((state) => cpupgcost.state * 1.15);
       } else if (clickpower.state > 15 && clickpower.state <= 40) {
@@ -247,35 +290,15 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
         cpupgcost.update((state) => cpupgcost.state * 1.6);
       }
     }
-    // if (clickpower.state <= 15) {
-    //   cpupgcost.update(
-    //       (state) => (30 * pow(1.15, clickpower.state)).round().toDouble());
-    // } else if (clickpower.state > 15 && clickpower.state <= 40) {
-    //   cpupgcost.update((state) =>
-    //       (30 * 8.137 * pow(1.25, clickpower.state - 15)).round().toDouble());
-    // } else if (clickpower.state > 40 && clickpower.state <= 75) {
-    //   cpupgcost.update((state) =>
-    //       (30 * 2154 * pow(1.4, clickpower.state - 40)).round().toDouble());
-    // } else {
-    //   cpupgcost.update((state) =>
-    //       (30 * 280367034 * pow(1.6, clickpower.state - 75))
-    //           .round()
-    //           .toDouble());
-    // }
   }
 
   void upgradeUpgradePower() {
     var darkmatter = ref.watch(darkmatterProvider.notifier);
     var cpmultipliers = ref.watch(generalcpmultiplierProvider.notifier);
-    var cpmultiplier = ref.watch(cpmultiplierProvider.notifier);
     var upgradepower = ref.watch(upgradepowerProvider.notifier);
     var upupgcost = ref.watch(upupgcostProvider.notifier);
     var upmultiplier = ref.watch(upmultiplierProvider.notifier);
     var freeupupg = ref.watch(freeupupgProvider.notifier);
-    var epmultiplier = ref.watch(epmultiplierProvider.notifier);
-    var spmultiplier = ref.watch(spmultiplierProvider.notifier);
-    var dmboostermultiplier =
-        ref.watch(permaupgDmboosterMultiplierProvider.notifier);
     ref.watch(sacrificepointincreaseProvider.notifier);
     if (darkmatter.state >= upupgcost.state) {
       darkmatter.update((state) => darkmatter.state - upupgcost.state);
@@ -283,12 +306,7 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
       upmultiplier.update((state) =>
           (pow(1.04, (upgradepower.state + freeupupg.state)) *
               (1 + (upgradepower.state + freeupupg.state) * 0.25)));
-      cpmultipliers.update((state) =>
-          cpmultiplier.state *
-          upmultiplier.state *
-          epmultiplier.state *
-          spmultiplier.state *
-          dmboostermultiplier.state);
+      cpmultipliers.state = calcMultiplier();
       if (upgradepower.state <= 10) {
         upupgcost.update((state) => upupgcost.state * 1.25);
       } else if (upgradepower.state > 10 && upgradepower.state <= 25) {
@@ -299,37 +317,16 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
         upupgcost.update((state) => upupgcost.state * 1.8);
       }
     }
-    // if (upgradepower.state <= 10) {
-    //   upupgcost.update(
-    //       (state) => (400 * pow(1.25, upgradepower.state)).round().toDouble());
-    // } else if (upgradepower.state > 10 && upgradepower.state <= 25) {
-    //   upupgcost.update((state) =>
-    //       (400 * 9.313 * pow(1.4, upgradepower.state - 10)).round().toDouble());
-    // } else if (upgradepower.state > 25 && upgradepower.state <= 50) {
-    //   upupgcost.update((state) =>
-    //       (400 * 1448.8 * pow(1.6, upgradepower.state - 25))
-    //           .round()
-    //           .toDouble());
-    // } else {
-    //   upupgcost.update((state) =>
-    //       (400 * 183657219 * pow(1.8, upgradepower.state - 50))
-    //           .round()
-    //           .toDouble());
-    // }
   }
 
   void upgradeEnhancePower() {
     var darkmatter = ref.watch(darkmatterProvider.notifier);
     var cpmultipliers = ref.watch(generalcpmultiplierProvider.notifier);
-    var cpmultiplier = ref.watch(cpmultiplierProvider.notifier);
-    var upmultiplier = ref.watch(upmultiplierProvider.notifier);
     var freeepupg = ref.watch(freeepupgProvider.notifier);
     var enhancepower = ref.watch(enhancepowerProvider.notifier);
     var epupgcost = ref.watch(epupgcostProvider.notifier);
     var epmultiplier = ref.watch(epmultiplierProvider.notifier);
-    var spmultiplier = ref.watch(spmultiplierProvider.notifier);
-    var dmboostermultiplier =
-        ref.watch(permaupgDmboosterMultiplierProvider.notifier);
+    ref.watch(permaupgDmboosterMultiplierProvider.notifier);
     ref.watch(sacrificepointincreaseProvider.notifier);
     if (darkmatter.state >= epupgcost.state) {
       darkmatter.update((state) => darkmatter.state - epupgcost.state);
@@ -337,12 +334,7 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
       epmultiplier.update((state) =>
           (pow(1.05, (enhancepower.state + freeepupg.state)) *
               (1 + (enhancepower.state + freeepupg.state) * 0.4)));
-      cpmultipliers.update((state) =>
-          cpmultiplier.state *
-          upmultiplier.state *
-          epmultiplier.state *
-          spmultiplier.state *
-          dmboostermultiplier.state);
+      cpmultipliers.state = calcMultiplier();
       if (enhancepower.state <= 4) {
         epupgcost.update((state) => epupgcost.state * 1.3);
       } else if (enhancepower.state > 4 && enhancepower.state <= 12) {
@@ -353,21 +345,6 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
         epupgcost.update((state) => epupgcost.state * 2);
       }
     }
-    // if (enhancepower.state <= 4) {
-    //   epupgcost.update(
-    //       (state) => (5000 * pow(1.3, enhancepower.state)).round().toDouble());
-    // } else if (enhancepower.state > 4 && enhancepower.state <= 12) {
-    //   epupgcost.update((state) =>
-    //       (5000 * 2.856 * pow(1.5, enhancepower.state - 4)).round().toDouble());
-    // } else if (enhancepower.state > 12 && enhancepower.state <= 25) {
-    //   epupgcost.update((state) =>
-    //       (5000 * 73.196 * pow(1.7, enhancepower.state - 12))
-    //           .round()
-    //           .toDouble());
-    // } else {
-    //   epupgcost.update((state) =>
-    //       (5000 * 72497 * pow(2, enhancepower.state - 25)).round().toDouble());
-    // }
   }
 
   void buyDmDim1() {
@@ -508,8 +485,6 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
     var dm2persec = ref.watch(dm2persecProvider.notifier);
     var dm3persec = ref.watch(dm3persecProvider.notifier);
     var spbooster = ref.watch(permaupgSpboosterMultiplierProvider.notifier);
-    var dmboostermultiplier =
-        ref.watch(permaupgDmboosterMultiplierProvider.notifier);
     if (darkmatter.state >= 50000) {
       sacrificepointincrease.update((state) =>
           (pow((darkmatter.state - 50000), 0.3) *
@@ -568,12 +543,7 @@ class HomeRiverpodNotifier extends StateNotifier<HomeRiverpodState> {
             0,
             10000,
           ]);
-      cpmultipliers.update((state) =>
-          cpmultiplier.state *
-          upmultiplier.state *
-          epmultiplier.state *
-          spmultiplier.state *
-          dmboostermultiplier.state);
+      cpmultipliers.state = calcMultiplier();
       dmpersec.update((state) =>
           ((dm1persec.state + dm2persec.state + dm3persec.state) *
                   spmultiplier.state)

@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../variable_provider.dart';
+import '../home/home_notifier.dart';
 
 part 'upgrades_notifier.freezed.dart';
 
@@ -27,12 +30,9 @@ class UpgradePiverpodNotifier extends StateNotifier<UpgradeRiverpodState> {
 
   void initState() {}
   void upgradeDMBooster() {
+    var homeNotifier = ref.watch(homeRiverpodState.notifier);
     var darkmatter = ref.watch(darkmatterProvider.notifier);
     var cpmultipliers = ref.watch(generalcpmultiplierProvider.notifier);
-    var cpmultiplier = ref.watch(cpmultiplierProvider.notifier);
-    var upmultiplier = ref.watch(upmultiplierProvider.notifier);
-    var epmultiplier = ref.watch(epmultiplierProvider.notifier);
-    var spmultiplier = ref.watch(spmultiplierProvider.notifier);
     var dmbooster = ref.watch(permaupgDmboosterProvider.notifier);
     var dmboostercost = ref.watch(permaupgDmboosterCostProvider.notifier);
     var dmboostermultiplier =
@@ -42,12 +42,7 @@ class UpgradePiverpodNotifier extends StateNotifier<UpgradeRiverpodState> {
       dmbooster.state += 1;
       dmboostercost.state *= 2;
       dmboostermultiplier.state += 0.2;
-      cpmultipliers.update((state) =>
-          cpmultiplier.state *
-          upmultiplier.state *
-          epmultiplier.state *
-          spmultiplier.state *
-          dmboostermultiplier.state);
+      cpmultipliers.state = homeNotifier.calcMultiplier();
     }
   }
 
@@ -64,4 +59,22 @@ class UpgradePiverpodNotifier extends StateNotifier<UpgradeRiverpodState> {
       spboostermultiplier.state += 0.1;
     }
   }
+
+  void dimupg1() {
+    var darkmatter = ref.watch(darkmatterProvider.notifier);
+    var clickcount = ref.watch(clickcountProvider.notifier);
+    var clickcountmultiplier = ref.watch(clickcountmultiplierProvider.notifier);
+    var dimensionupgrade = ref.watch(dimensionupgradestrProvider.notifier);
+    if (darkmatter.state >= 300 && dimensionupgrade.state[0] == "0") {
+      darkmatter.state -= 300;
+      dimensionupgrade.state[0] = "1";
+      clickcountmultiplier.state = 1.0 + sqrt(clickcount.state) * 0.03;
+    }
+  }
+
+  void dimupg2() {}
+  void dimupg3() {}
+  void dimupg4() {}
+  void dimupg5() {}
+  void dimupg6() {}
 }

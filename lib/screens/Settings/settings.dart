@@ -66,7 +66,36 @@ class SettingScreen extends ConsumerWidget {
                       'This game has no autosave feature.\nDon\'t forget to save your game!',
                   style: TextStyle(color: Colors.red, fontSize: 15)),
               textAlign: TextAlign.center,
-            )
+            ),
+            RichText(
+              text: const TextSpan(
+                  text:
+                      '- - - - - - - - - - - - - - - - Statistics - - - - - - - - - - - - - - - -',
+                  style: TextStyle(color: Colors.black, fontSize: 18)),
+              textAlign: TextAlign.center,
+            ),
+            Consumer(builder: (context, ref, child) {
+              return RichText(
+                text: TextSpan(
+                  text: 'You have clicked ',
+                  style: const TextStyle(color: Colors.black54, fontSize: 16),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: ref.watch(clickcountProvider).round().toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.copyWith(color: Colors.purple, fontSize: 20),
+                    ),
+                    const TextSpan(
+                      text: ' times.',
+                      style: TextStyle(color: Colors.black54, fontSize: 16),
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              );
+            }),
           ])),
     );
   }

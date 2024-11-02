@@ -5,6 +5,8 @@ final generalcpmultiplierProvider = StateProvider((ref) => 1.0);
 final generaldmpersecProvider = StateProvider((ref) => 0.0);
 final darkmatterProvider = StateProvider((ref) => 0.0);
 final dmperclickProvider = StateProvider((ref) => 1.0);
+final clickcountProvider = StateProvider((ref) => 0.0);
+final clickcountmultiplierProvider = StateProvider((ref) => 1.0);
 final dm1persecProvider = StateProvider((ref) => 0.0);
 final dm2persecProvider = StateProvider((ref) => 0.0);
 final dm3persecProvider = StateProvider((ref) => 0.0);
@@ -18,6 +20,15 @@ final upmultiplierProvider = StateProvider((ref) => 1.0);
 final enhancepowerProvider = StateProvider((ref) => 0.0);
 final epupgcostProvider = StateProvider((ref) => 5000.0);
 final epmultiplierProvider = StateProvider((ref) => 1.0);
+final mainupgradesProvider = StateProvider((ref) => 0.0);
+final dimensionupgradestrProvider = StateProvider((ref) => [
+      '0',
+      '0',
+      '0',
+      '0',
+      '0',
+      '0',
+    ]);
 final freecpupgProvider = StateProvider((ref) => 0.0);
 final freeupupgProvider = StateProvider((ref) => 0.0);
 final freeepupgProvider = StateProvider((ref) => 0.0);

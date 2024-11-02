@@ -36,6 +36,8 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
     final prefs = await SharedPreferences.getInstance();
     var darkmatter = ref.watch(darkmatterProvider.notifier);
     var dmperclick = ref.watch(dmperclickProvider.notifier);
+    var clickcount = ref.watch(clickcountProvider.notifier);
+    var clickcountmultiplier = ref.watch(clickcountmultiplierProvider.notifier);
     var cpmultipliers = ref.watch(generalcpmultiplierProvider.notifier);
     var dmpersec = ref.watch(generaldmpersecProvider.notifier);
     var dmsoftcapdiviser = ref.watch(dmsoftcapdiviserProvider.notifier);
@@ -48,6 +50,8 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
     var enhancepower = ref.watch(enhancepowerProvider.notifier);
     var epupgcost = ref.watch(epupgcostProvider.notifier);
     var epmultiplier = ref.watch(epmultiplierProvider.notifier);
+    var mainupgrades = ref.watch(mainupgradesProvider.notifier);
+    var dimensionupgrade = ref.watch(dimensionupgradestrProvider.notifier);
     var freecpupg = ref.watch(freecpupgProvider.notifier);
     var freeupupg = ref.watch(freeupupgProvider.notifier);
     var freeepupg = ref.watch(freeepupgProvider.notifier);
@@ -80,6 +84,8 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
     prefs.setDouble('dmsoftcapdiviser', dmsoftcapdiviser.state);
     prefs.setDouble('clickpower', clickpower.state);
     prefs.setDouble('cpupgcost', cpupgcost.state);
+    prefs.setDouble('clickcount', clickcount.state);
+    prefs.setDouble('clickcountmultiplier', clickcountmultiplier.state);
     prefs.setDouble('cpmultiplier', cpmultiplier.state);
     prefs.setDouble('upgradepower', upgradepower.state);
     prefs.setDouble('upupgcost', upupgcost.state);
@@ -87,6 +93,7 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
     prefs.setDouble('enhancepower', enhancepower.state);
     prefs.setDouble('epupgcost', epupgcost.state);
     prefs.setDouble('epmultiplier', epmultiplier.state);
+    prefs.setDouble('mainupgrades', mainupgrades.state);
     prefs.setDouble('freecpupg', freecpupg.state);
     prefs.setDouble('freeupupg', freeupupg.state);
     prefs.setDouble('freeepupg', freeepupg.state);
@@ -124,6 +131,7 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
           dmdim3.state[3].toString(),
           dmdim3.state[4].toString(),
         ]);
+    prefs.setStringList('dimensionupgrade', dimensionupgrade.state);
     prefs.setStringList('dmdim1', dmdim1str.state);
     prefs.setStringList('dmdim2', dmdim2str.state);
     prefs.setStringList('dmdim3', dmdim3str.state);
@@ -136,6 +144,8 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
     var dmpersec = ref.watch(generaldmpersecProvider.notifier);
     var dmsoftcapdiviser = ref.watch(dmsoftcapdiviserProvider.notifier);
     var clickpower = ref.watch(clickpowerProvider.notifier);
+    var clickcount = ref.watch(clickcountProvider.notifier);
+    var clickcountmultiplier = ref.watch(clickcountmultiplierProvider.notifier);
     var cpupgcost = ref.watch(cpupgcostProvider.notifier);
     var cpmultiplier = ref.watch(cpmultiplierProvider.notifier);
     var upgradepower = ref.watch(upgradepowerProvider.notifier);
@@ -144,6 +154,8 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
     var enhancepower = ref.watch(enhancepowerProvider.notifier);
     var epupgcost = ref.watch(epupgcostProvider.notifier);
     var epmultiplier = ref.watch(epmultiplierProvider.notifier);
+    var mainupgrades = ref.watch(mainupgradesProvider.notifier);
+    var dimensionupgradestr = ref.watch(dimensionupgradestrProvider.notifier);
     var freecpupg = ref.watch(freecpupgProvider.notifier);
     var freeupupg = ref.watch(freeupupgProvider.notifier);
     var freeepupg = ref.watch(freeepupgProvider.notifier);
@@ -171,6 +183,8 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
         ref.watch(permaupgSpboosterMultiplierProvider.notifier);
     darkmatter.update((state) => 0);
     dmperclick.update((state) => 1);
+    clickcount.update((state) => 0);
+    clickcountmultiplier.update((state) => 1);
     cpmultipliers.update((state) => 1);
     dmpersec.update((state) => 0);
     dmsoftcapdiviser.update((state) => 1);
@@ -183,6 +197,15 @@ class SettingRiverpodNotifier extends StateNotifier<SettingRiverpodState> {
     cpmultiplier.update((state) => 1);
     upmultiplier.update((state) => 1);
     epmultiplier.update((state) => 1);
+    mainupgrades.update((state) => 0);
+    dimensionupgradestr.update((state) => [
+          '0',
+          '0',
+          '0',
+          '0',
+          '0',
+          '0',
+        ]);
     freecpupg.update((state) => 0);
     freeupupg.update((state) => 0);
     freeepupg.update((state) => 0);
